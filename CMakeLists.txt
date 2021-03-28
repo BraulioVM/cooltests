@@ -14,6 +14,7 @@ if (${cooltests_OwnTests})
     example/test1.cpp
     example/test2.cpp
     )
+  target_include_directories(mytests PRIVATE example)
   configure_cool_tests(mytests)
 endif()
 

@@ -1,7 +1,30 @@
 # `cooltests`
 
 Self-discoverable C++ tests without using macros. This CMake module
-lets you do:
+lets you write test drivers like:
+
+`test1.cpp`:
+```c++
+#include <assertion_macro.h>
+
+void testAdditionIsGreat() {
+  ASSERT_EQ(1 + 1, 2);
+}
+
+void testMultiplicationIsCool() {
+  ASSERT_EQ(3 * 7, 21);
+}
+
+int helperFunction(int x) {
+  return x+1;
+}
+
+void testHelperFunctionIsBroken() {
+  ASSERT(helperFunction(3) != 4);
+}
+```
+
+Then you can link it (and possibly others) into a test executable:
 
 ```CMake
 add_executable(mytest 
@@ -11,12 +34,28 @@ add_executable(mytest
 configure_cool_tests(mytest)
 ```
 
-where neither `test1.cpp` nor `test2.cpp` provide a `main` function. They
-just have to provide a few `void(void)` functions whose names begin by `test`
-and then `cooltests` will link them into an executable that automatically runs
-all of them.
+and get the following output when running `ctest`:
 
-Never use this project.
+```
+AdditionIsGreat               RUNNING
+AdditionIsGreat               SUCCESS
+
+MultiplicationIsCool          RUNNING
+MultiplicationIsCool          SUCCESS
+
+HelperFunctionIsBroken        RUNNING
+HelperFunctionIsBroken        FAILURE
+
+ImplicitStringViewConversion  RUNNING
+ImplicitStringViewConversion  SUCCESS
+
+Tests passed 3/4
+```
+
+note that neither `test1.cpp` nor `test2.cpp` provide a `main` function. 
+Neither is one required to register the test functions anywhere. The
+`configure_cool_tests` function will find all the function names that begin
+with `test` and create a `main` function that invokes them.
 
 ## Build this project
 

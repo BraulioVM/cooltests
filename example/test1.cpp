@@ -1,9 +1,17 @@
-#include <iostream>
+#include <assertion_macro.h>
 
-extern "C" void testSomethingGoesWell() {
-
+void testAdditionIsGreat() {
+  ASSERT_EQ(1 + 1, 2);
 }
 
-extern "C" void testAnotherThing() {
+void testMultiplicationIsCool() {
+  ASSERT_EQ(3 * 7, 21);
+}
 
+int helperFunction(int x) {
+  return x+1;
+}
+
+void testHelperFunctionIsBroken() {
+  ASSERT(helperFunction(3) != 4);
 }

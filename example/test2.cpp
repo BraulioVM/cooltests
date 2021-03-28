@@ -1,27 +1,11 @@
-#include <iostream>
-#include <cassert>
 #include <string_view>
+#include <string>
 
-#define TEST(name) void test##name ()
+#include <assertion_macro.h>
 
-void testSomethingGoesWell2() {
-  //  std::cout << "something goes well 2" << std::endl;;
-}
+void testImplicitStringViewConversion() {
+  std::string hello("hello");
+  std::string_view lhs = hello;
 
-void testSomething() {
-  throw 3;
-}
-
-
-void testSomethingCool2() {
-  std::string_view a = "helloo";
-
-  if (a.size() == 5) {
-    throw 3;
-  }
-  
-}
-
-void testAaa() {
-
+  ASSERT_EQ(lhs, "hello");
 }
