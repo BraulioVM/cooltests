@@ -9,9 +9,11 @@ add_subdirectory(cooltestslib)
 
 include(CoolTests.cmake)
 
-add_executable(mytests
-  example/test1.cpp
-  example/test2.cpp
-)
-configure_cool_tests(mytests)
+if (${cooltests_OwnTests})
+  add_executable(mytests
+    example/test1.cpp
+    example/test2.cpp
+    )
+  configure_cool_tests(mytests)
+endif()
 
